@@ -1,6 +1,7 @@
 package org.example
 
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
@@ -32,15 +33,20 @@ fun main(args: Array<String>) {
         }
     }
 
-    val (matrix1, matrix2) = if (inputStream == null) {
-        println("Чтение матриц из консоли")
-        fromConsole(Scanner(System.`in`))
-    } else {
-        println("Чтение матриц из файла")
-        // TODO: а что за проблемы с выводом типа?
-        fromFile(Scanner(inputStream!!))
-    }
 
-    val result = matrix1.multiplyTransposed(matrix2.transposed())
-    result.printMatrix(System.`out`)
+    try {
+        val (matrix1, matrix2) = if (inputStream == null) {
+            println("Чтение матриц из консоли")
+            fromConsole(Scanner(System.`in`))
+        } else {
+            println("Чтение матриц из файла")
+            // TODO: а что за проблемы с выводом типа?
+            fromFile(Scanner(inputStream!!))
+        }
+
+        val result = matrix1.multiplyTransposed(matrix2.transposed())
+        result.printMatrix(System.`out`)
+    } catch (e: IOException) {
+        println("Продолжить выполнение невозможно: $e")
+    }
 }

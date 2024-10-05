@@ -1,16 +1,46 @@
 package org.example
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, ${name}!")
+import java.io.File
+import java.io.InputStream
+import java.util.*
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
+fun fromConsole(scanner: Scanner): Pair<Matrix, Matrix> {
+    println("Введите первую матрицу")
+    val matrix1 = readMatrix(scanner)
+    println("Введите вторую матрицу")
+    val matrix2 = readMatrix(scanner)
+    return Pair(matrix1, matrix2)
+}
+
+fun fromFile(scanner: Scanner): Pair<Matrix, Matrix> {
+    val matrix1 = readMatrix(scanner)
+    val matrix2 = readMatrix(scanner)
+    return Pair(matrix1, matrix2)
+}
+
+fun main(args: Array<String>) {
+    var inputStream: InputStream? = null
+    args.forEach {
+        when {
+            it.startsWith("--input-file=") -> {
+                try {
+                    inputStream = File(it.substring("--input-file=".length)).inputStream()
+                } catch (e: Exception) {
+                    println("Не удалось открыть файл")
+                }
+            }
+        }
     }
+
+    val (matrix1, matrix2) = if (inputStream == null) {
+        println("Чтение матриц из консоли")
+        fromConsole(Scanner(System.`in`))
+    } else {
+        println("Чтение матриц из файла")
+        // TODO: а что за проблемы с выводом типа?
+        fromFile(Scanner(inputStream!!))
+    }
+
+    val result = matrix1.multiplyTransposed(matrix2.transposed())
+    result.printMatrix(System.`out`)
 }

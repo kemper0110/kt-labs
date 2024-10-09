@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Lab1-file" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="org.example.MainKt" />
+    <module name="lab1" />
+    <option name="PROGRAM_PARAMETERS" value="--input-file=lab1/input.txt" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

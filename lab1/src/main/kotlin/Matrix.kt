@@ -1,22 +1,22 @@
 package org.example
 
 class Matrix {
-    private val data: IntArray
+    private val data: DoubleArray
     val rows: Int
     val cols: Int
 
     constructor(rows: Int, cols: Int) {
         this.rows = rows
         this.cols = cols
-        this.data = IntArray(rows * cols)
+        this.data = DoubleArray(rows * cols)
     }
 
-    constructor(rows: Int, cols: Int, data: IntArray) : this(rows, cols) {
+    constructor(rows: Int, cols: Int, data: DoubleArray) : this(rows, cols) {
         data.copyInto(this.data, 0, 0, rows * cols)
     }
 
     operator fun get(i: Int, j: Int) = data[i * cols + j]
-    operator fun set(i: Int, j: Int, value: Int) {
+    operator fun set(i: Int, j: Int, value: Double) {
         data[i * cols + j] = value
     }
     override fun equals(other: Any?): Boolean {
@@ -34,23 +34,16 @@ class Matrix {
     }
 }
 
-fun Matrix.multiplyTransposed(transposed: Matrix): Matrix {
-    val result = Matrix(this.rows, transposed.rows)
+fun Matrix.multiply(matrix: Matrix): Matrix {
+    require(this.cols == matrix.rows) { "Количество столбцов первой матрицы должно совпадать с количеством строк второй матрицы" }
+    val result = Matrix(this.rows, matrix.cols)
     for (i in 0 until this.rows) {
-        for(j in 0 until transposed.rows) {
-            var sum = 0
+        for(j in 0 until matrix.cols) {
+            var sum = .0
             for (k in 0 until this.cols)
-                sum += this[i, k] * transposed[j, k]
+                sum += this[i, k] * matrix[k, j]
             result[i, j] = sum
         }
     }
     return result
-}
-
-fun Matrix.transposed(): Matrix {
-    val transposed = Matrix(this.cols, this.rows)
-    for (i in 0 until this.rows)
-        for (j in 0 until this.cols)
-            transposed[j, i] = this[i, j]
-    return transposed
 }

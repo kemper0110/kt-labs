@@ -44,7 +44,7 @@ fun main(args: Array<String>) {
             fromFile(Scanner(inputStream!!))
         }
 
-        val result = matrix1.multiplyTransposed(matrix2.transposed())
+        val result = matrix1.multiply(matrix2)
         result.printMatrix(System.`out`)
     } catch (e: IOException) {
         println("Продолжить выполнение невозможно: $e")

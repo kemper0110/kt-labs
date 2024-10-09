@@ -8,7 +8,7 @@ fun readMatrix(scanner: Scanner): Matrix {
     val matrix = Matrix(rows, cols)
     for (i in 0 until rows) {
         for (j in 0 until cols) {
-            matrix[i, j] = scanner.nextInt()
+            matrix[i, j] = scanner.nextDouble()
         }
     }
     return matrix

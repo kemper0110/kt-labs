@@ -46,7 +46,7 @@ fun main(args: Array<String>) {
 
         val result = matrix1.multiply(matrix2)
         result.printMatrix(System.`out`)
-    } catch (e: IOException) {
+    } catch (e: Exception) {
         println("Продолжить выполнение невозможно: $e")
     }
 }

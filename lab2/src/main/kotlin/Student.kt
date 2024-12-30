@@ -1,6 +1,6 @@
 package org.example
 
-class Student(studentId: String, coursesEnrolled: List<Course>, name: String, surname: String, birthDate: String) :
+class Student(val studentId: String, val coursesEnrolled: MutableList<Course>, name: String, surname: String, birthDate: String) :
     Person(name, surname, birthDate) {
 
 }

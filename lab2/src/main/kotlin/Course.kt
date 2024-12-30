@@ -1,5 +1,4 @@
 package org.example
 
-// courseId, courseName, teacher, studentsEnrolled
-class Course(courseId: String, courseName: String, teacher: Teacher, studentsEnrolled: List<Student>) {
+class Course(val courseId: String, val courseName: String, val teacher: Teacher, val studentsEnrolled: MutableList<Student>) {
 }

@@ -1,0 +1,25 @@
+### Получаем список клиентов
+GRAPHQL http://localhost:8080/graphql
+
+{
+    clients {
+        id
+        name
+        email
+        orders {
+            id
+            status
+        }
+    }
+}
+
+### Регаем клиентов
+GRAPHQL http://localhost:8080/graphql
+
+mutation {
+    createClient(input: {name: "user1", email: "user1 at mail dot com"}) {
+        id
+        name
+        email
+    }
+}

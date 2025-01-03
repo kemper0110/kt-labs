@@ -1,0 +1,9 @@
+### Получаем анализ продаж по категориям
+GRAPHQL http://localhost:8080/graphql
+
+{
+    sellsAnalytics {
+        category
+        sells
+    }
+}

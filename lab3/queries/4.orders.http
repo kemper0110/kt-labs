@@ -1,0 +1,24 @@
+### Получаем список заказов
+GRAPHQL http://localhost:8080/graphql
+
+query getOrders {
+    orders {
+        id client{id name} status
+    }
+}
+
+### Создаем заказ
+GRAPHQL http://localhost:8080/graphql
+
+mutation createOrder {
+    createOrder(clientId: "default-client-2") {
+        id client {
+            id
+        } status products {
+            product {
+                name
+            }
+            quantity
+        }
+    }
+}

@@ -1,0 +1,116 @@
+type Query {
+    clients: [Client!]!
+    #    Поиска продуктов по категории, цене
+    products(filter: ProductFilter): [Product!]!
+    #    Расчёта общей стоимости заказа с учётом возможных скидок
+    cartPrice(clientId: ID!): CartPrice!
+    #    Управления корзиной покупателя
+    cart(clientId: ID!): [CartItem!]!
+    #    Заказы
+    orders: [Order!]!
+    #    Анализа продаж по категориям продуктов
+    sellsAnalytics: [CategorySellsAnalytics!]!
+}
+
+# Продукт: название, категория, цена, количество на складе
+type Product {
+    id: ID!
+    name: String!
+    category: String!
+    price: Int!
+    quantity: Int!
+}
+
+# Клиент: имя, контактные данные, история заказов
+type Client {
+    id: ID!
+    name: String!
+    email: String!
+    orders: [Order!]!
+#    cart: [CartItem!]!
+}
+
+type OrderItem {
+    product: Product!
+    quantity: Int!
+}
+
+enum OrderStatus {
+    NEW
+    PROCESSING
+    COMPLETED
+    CANCELED
+}
+
+# Заказ: список продуктов, клиент, статус заказа
+type Order {
+    id: ID!
+    products: [OrderItem!]!
+    client: Client!
+    status: OrderStatus!
+}
+
+input ProductFilter {
+    categories: [String!]
+    minPrice: Int
+    maxPrice: Int
+}
+
+type CartItem {
+    id: ID!
+    clientId: ID!
+    product: Product!
+    quantity: Int!
+}
+
+type Discount {
+    name: String!
+    value: Int!
+}
+
+type CartPrice {
+    price: Int!
+    discounts: [Discount!]!
+}
+
+type CategorySellsAnalytics {
+    category: String!
+    sells: Int!
+}
+
+
+
+type Mutation {
+    #    Добавления продуктов в каталог
+    createProduct(input: ProductInput!): Product!
+    #    обновления информации о наличии
+    updateProductQuantity(id: ID!, quantity: Int!): Product!
+
+    #    Регистрации клиентов
+    createClient(input: ClientInput!): Client!
+
+    #    Оформления заказов клиентами с обновлением остатков на складе - заказываем все что в корзине
+    createOrder(clientId: ID!): Order!
+
+    #    Управления корзиной покупателя
+    createCartItem(input: CreateCartItemInput!): CartItem!
+    deleteCartItem(cartItemId: ID!): Boolean!
+}
+
+input CreateCartItemInput {
+    clientId: ID!
+    productId: ID!
+    quantity: Int!
+}
+
+input ProductInput {
+    name: String!
+    category: String!
+    price: Int!
+    quantity: Int! = 0
+}
+
+input ClientInput {
+    name: String!
+    email: String!
+}

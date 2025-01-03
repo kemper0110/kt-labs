@@ -1,0 +1,26 @@
+### Получаем список продуктов с фильтрами
+GRAPHQL http://localhost:8080/graphql
+
+{
+    products(filter: {minPrice: 500, maxPrice: 600, categories: ["Оборудование", "Периферия"]}) {
+        id name category price quantity
+    }
+}
+
+### Создаем продукт
+GRAPHQL http://localhost:8080/graphql
+
+mutation {
+    createProduct (input: {name: "Ковер", category: "Периферия", price: 500, quantity: 3}) {
+        id name category price quantity
+    }
+}
+
+### Обновляем количество на продукте
+GRAPHQL http://localhost:8080/graphql
+
+mutation {
+    updateProductQuantity(id: "product-0", quantity: 50) {
+        id name category price quantity
+    }
+}

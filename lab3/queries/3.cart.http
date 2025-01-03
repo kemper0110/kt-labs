@@ -1,0 +1,47 @@
+### Получаем корзину покупателя
+GRAPHQL http://localhost:8080/graphql
+
+{
+    cart(clientId: "default-client-2") {
+        id
+        quantity
+        product {
+            id
+            name
+            category
+            price
+            quantity
+        }
+    }
+    cartPrice(clientId: "default-client-2") {
+        price
+        discounts {
+            name
+            value
+        }
+    }
+}
+
+### Добавляем продукты в корзину
+GRAPHQL http://localhost:8080/graphql
+
+mutation {
+    c1: createCartItem(
+        input: {clientId: "default-client-2", productId: "default-product-4", quantity: 1}
+    ) {
+        id
+        product {
+            id
+        }
+        quantity
+    }
+    c2: createCartItem(
+        input: {clientId: "default-client-2", productId: "default-product-3", quantity: 1}
+    ) {
+        id
+        product {
+            id
+        }
+        quantity
+    }
+}
